@@ -1,0 +1,13 @@
+{
+  "name": "McJeopardy",
+  "version": "0.0.1",
+  "description": "Jeopardy app for Ms. McDonald's class",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "rfs": "^9.0.3",
+    "socket.io": "^4.0.1"
+  }
+}
