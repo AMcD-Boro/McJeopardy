@@ -1,3 +1,5 @@
+var myClients = {};
+
 var express = require('express');
 var socket = require('socket.io');
 
@@ -19,12 +21,23 @@ io.on('connection', function(socket){
   console.log('made socket connection', socket.id);
 
   socket.on('join', function(data){
-      socket.broadcast.emit('join', data);
-    });
+    var keyid = socket.id;
+    socket.broadcast.emit('join', {'name':data, 'id':keyid});
+  });
 
+  socket.on('disablebuzz', function(data){
+    socket.broadcast.emit('disablebuzz', data);
+  });
+
+  socket.on('enablebuzz', function(data){
+    socket.broadcast.emit('enablebuzz', data);
+  });
 
   socket.on('buzz', function(data){
-      socket.broadcast.emit('buzz', data);
-    });
+    socket.broadcast.emit('buzz', data);
+  });
 
+  socket.on("disconnect", (reason) => {
+    socket.broadcast.emit('leave', socket.id);
+  });
 });

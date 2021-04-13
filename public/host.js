@@ -8,6 +8,9 @@ $(document).ready(function(){
   var playerlist = $('#player-list');
   var questionBlocks = $('.q');
   var questionScreen = $('.q-screen');
+  var enableBuzz = $("button[name='enableBuzz']");
+  var disableBuzz = $("button[name='disableBuzz']");
+  var clearListBtn = $("button[name='clearBuzz']");
 
   //Emit events
 
@@ -16,8 +19,24 @@ $(document).ready(function(){
     buzzlist.append('<li>' + data + ' buzzed in</li>');
   });
 
+  socketFE.on('leave', function(data){
+    $('#' + data).remove();
+  });
+
   socketFE.on('join', function(data){
-    playerlist.append('<li>' + data + '</li>');
+    playerlist.append('<li id="' + data.id + '">' + data.name + '</li>');
+  });
+
+  clearListBtn.click(function(){
+    buzzlist.empty();
+  });
+
+  disableBuzz.click(function(){
+      socketFE.emit('disablebuzz', 'disabled');
+  });
+
+  enableBuzz.click(function(){
+      socketFE.emit('enablebuzz', 'enabled');
   });
 
   questionBlocks.click(function(){

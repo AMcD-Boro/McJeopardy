@@ -53,6 +53,16 @@ $(document).ready(function(){
   });
 
   //Listen for events
+  socketFE.on('disablebuzz', function(data){
+    buzzer.attr('disabled','');
+    buzzer.addClass('low-opacity');
+  });
+
+  socketFE.on('enablebuzz', function(data){
+    buzzer.removeAttr('disabled','');
+    buzzer.removeClass('low-opacity');
+  });
+
   submit.click(function(){
 
     if($.inArray(idinput.val(), userid) !== -1)
